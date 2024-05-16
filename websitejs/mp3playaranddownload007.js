@@ -1,4 +1,4 @@
-    var currentSong = null;
+ var currentSong = null;
 
     // Function to dynamically create table rows
     function populateTable() {
