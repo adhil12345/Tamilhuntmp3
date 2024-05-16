@@ -1,4 +1,4 @@
- var currentSong = null;
+var currentSong = null;
 
     // Function to dynamically create table rows
     function populateTable() {
@@ -12,7 +12,7 @@
             var name = songDiv.getAttribute('data-name');
             var size = songDiv.getAttribute('data-size');
             var downloadLink = songDiv.getAttribute('data-download-link');
-            var isGoogleDrive = songDiv.getAttribute('data-google-drive') === "true";
+            var googleDriveLink = songDiv.getAttribute('data-google-drive');
 
             var row = document.createElement('tr');
             row.innerHTML = `
@@ -20,7 +20,7 @@
                 <td>${size}</td>
                 <td>
                     <button class="btn btn-download" onclick="openDownload('${downloadLink}')">Download</button>
-                    <button class="btn btn-play" onclick="${isGoogleDrive ? 'openGoogleDriveFile' : 'togglePlayStop'}('${downloadLink}', this)">${isGoogleDrive ? 'Play' : 'Play/Stop'}</button>
+                    <button class="btn btn-play" onclick="${googleDriveLink ? 'openGoogleDriveFile' : 'togglePlayStop'}('${googleDriveLink || downloadLink}', this)">${googleDriveLink ? 'Play' : 'Play/Stop'}</button>
                 </td>
             `;
             tableBody.appendChild(row);
