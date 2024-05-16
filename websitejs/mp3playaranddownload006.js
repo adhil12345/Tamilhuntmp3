@@ -70,18 +70,7 @@
 
     // Function to open download link in new tab
     function openDownload(downloadUrl) {
-        // For Google Drive download links, construct the direct download link
-        if (downloadUrl.includes('drive.google.com')) {
-            var fileId = extractGoogleDriveFileId(downloadUrl);
-            downloadUrl = `https://drive.google.com/uc?id=${fileId}&export=download`;
-        }
         window.open(downloadUrl, '_blank');
-    }
-
-    // Function to extract file ID from Google Drive download link
-    function extractGoogleDriveFileId(url) {
-        var match = url.match(/\/d\/([a-zA-Z0-9_-]+)(?:\/|$)/);
-        return match ? match[1] : null;
     }
 
     // Function to open Google Drive file
