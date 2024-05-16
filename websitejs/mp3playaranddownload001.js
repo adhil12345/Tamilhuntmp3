@@ -15,7 +15,7 @@ var currentSong = null;
 
             var row = document.createElement('tr');
             row.innerHTML = `
-                <td>${name}</td>
+                <td style="padding-inline-start: 10px;">${name}</td>
                 <td>${size}</td>
                 <td>
                     <button class="btn btn-download" onclick="openDownloadLink('${downloadLink}')">Download</button>
