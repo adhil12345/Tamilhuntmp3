@@ -1,4 +1,4 @@
-var currentSong = null;
+    var currentSong = null;
 
     // Function to dynamically create table rows
     function populateTable() {
@@ -8,18 +8,19 @@ var currentSong = null;
         var songDataDiv = document.querySelector('.songData');
         var songDivs = songDataDiv.querySelectorAll('div');
 
-        songDivs.forEach(function(songDiv, index) {
+        songDivs.forEach(function (songDiv, index) {
             var name = songDiv.getAttribute('data-name');
             var size = songDiv.getAttribute('data-size');
             var downloadLink = songDiv.getAttribute('data-download-link');
+            var isGoogleDrive = songDiv.getAttribute('data-google-drive') === "true";
 
             var row = document.createElement('tr');
             row.innerHTML = `
                 <td style="padding-inline-start: 10px;"> ${name}</td>
                 <td>${size}</td>
                 <td>
-                    <button class="btn btn-download" onclick="openDownloadLink('${downloadLink}')">Download</button>
-                    <button class="btn btn-play" onclick="togglePlayStop('${downloadLink}', this)">Play</button>
+                    <button class="btn btn-download" onclick="openDownload('${downloadLink}')">Download</button>
+                    <button class="btn btn-play" onclick="${isGoogleDrive ? 'openGoogleDriveFile' : 'togglePlayStop'}('${downloadLink}', this)">${isGoogleDrive ? 'Play' : 'Play/Stop'}</button>
                 </td>
             `;
             tableBody.appendChild(row);
@@ -30,7 +31,7 @@ var currentSong = null;
     function togglePlayStop(songUrl, button) {
         var audioPlayer = document.getElementById('audioPlayer');
         var playButton = button;
-        
+
         // If the clicked song is already playing, pause it
         if (currentSong === songUrl) {
             if (!audioPlayer.paused) {
@@ -59,7 +60,7 @@ var currentSong = null;
         playButton.classList.add('btn-stop');
 
         // Handle song end event
-        audioPlayer.addEventListener('ended', function() {
+        audioPlayer.addEventListener('ended', function () {
             currentSong = null;
             playButton.textContent = 'Play';
             playButton.classList.remove('btn-stop');
@@ -68,8 +69,30 @@ var currentSong = null;
     }
 
     // Function to open download link in new tab
-    function openDownloadLink(songUrl) {
-        window.open(songUrl, '_blank');
+    function openDownload(downloadUrl) {
+        // For Google Drive download links, construct the direct download link
+        if (downloadUrl.includes('drive.google.com')) {
+            var fileId = extractGoogleDriveFileId(downloadUrl);
+            downloadUrl = `https://drive.google.com/uc?id=${fileId}&export=download`;
+        }
+        window.open(downloadUrl, '_blank');
+    }
+
+    // Function to extract file ID from Google Drive download link
+    function extractGoogleDriveFileId(url) {
+        var match = url.match(/\/d\/([a-zA-Z0-9_-]+)(?:\/|$)/);
+        return match ? match[1] : null;
+    }
+
+    // Function to open Google Drive file
+    function openGoogleDriveFile(googleDriveLink, button) {
+        if (button.classList.contains('btn-download')) {
+            // If the action is triggered from the download button, directly download the file
+            openDownload(googleDriveLink);
+        } else {
+            // If the action is triggered from the play button, open the Google Drive link
+            window.open(googleDriveLink, '_blank');
+        }
     }
 
     // Call the function to populate the table
