@@ -1,4 +1,4 @@
-    var currentSong = null;
+ var currentSong = null;
 
     // Function to dynamically create table rows
     function populateTable() {
@@ -20,7 +20,7 @@
                 <td>${size}</td>
                 <td>
                     <button class="btn btn-download" onclick="openDownload('${downloadLink}')">Download</button>
-                    <button class="btn btn-play" onclick="${isGoogleDrive ? 'openGoogleDriveFile' : 'togglePlayStop'}('${downloadLink}')">${isGoogleDrive ? 'Play' : 'Play/Stop'}</button>
+                    <button class="btn btn-play" onclick="${isGoogleDrive ? 'openGoogleDriveFile' : 'togglePlayStop'}('${downloadLink}', this)">${isGoogleDrive ? 'Play' : 'Play/Stop'}</button>
                 </td>
             `;
             tableBody.appendChild(row);
@@ -28,21 +28,25 @@
     }
 
     // Function to play or stop song
-    function togglePlayStop(songUrl) {
+    function togglePlayStop(songUrl, button) {
         var audioPlayer = document.getElementById('audioPlayer');
+        var playButton = button;
 
         // If the clicked song is already playing, pause it
         if (currentSong === songUrl) {
             if (!audioPlayer.paused) {
                 audioPlayer.pause();
                 audioPlayer.currentTime = 0;
+                playButton.textContent = 'Play';
             }
             return;
         }
 
         // Stop the currently playing song
         if (currentSong !== null) {
+            var currentPlayButton = document.querySelector('.btn-stop');
             var currentAudioPlayer = document.getElementById('audioPlayer');
+            currentPlayButton.textContent = 'Play';
             currentAudioPlayer.pause();
             currentAudioPlayer.currentTime = 0;
         }
@@ -51,21 +55,44 @@
         currentSong = songUrl;
         audioPlayer.src = songUrl;
         audioPlayer.play();
+        playButton.textContent = 'Stop';
+        playButton.classList.remove('btn-play');
+        playButton.classList.add('btn-stop');
 
         // Handle song end event
         audioPlayer.addEventListener('ended', function () {
             currentSong = null;
+            playButton.textContent = 'Play';
+            playButton.classList.remove('btn-stop');
+            playButton.classList.add('btn-play');
         });
     }
 
     // Function to open download link in new tab
     function openDownload(downloadUrl) {
+        // For Google Drive download links, construct the direct download link
+        if (downloadUrl.includes('drive.google.com')) {
+            var fileId = extractGoogleDriveFileId(downloadUrl);
+            downloadUrl = `https://drive.google.com/uc?id=${fileId}&export=download`;
+        }
         window.open(downloadUrl, '_blank');
     }
 
-    // Function to open Google Drive file in new tab
-    function openGoogleDriveFile(googleDriveLink) {
-        window.open(googleDriveLink, '_blank');
+    // Function to extract file ID from Google Drive download link
+    function extractGoogleDriveFileId(url) {
+        var match = url.match(/\/d\/([a-zA-Z0-9_-]+)(?:\/|$)/);
+        return match ? match[1] : null;
+    }
+
+    // Function to open Google Drive file
+    function openGoogleDriveFile(googleDriveLink, button) {
+        if (button.classList.contains('btn-download')) {
+            // If the action is triggered from the download button, directly download the file
+            openDownload(googleDriveLink);
+        } else {
+            // If the action is triggered from the play button, open the Google Drive link
+            window.open(googleDriveLink, '_blank');
+        }
     }
 
     // Call the function to populate the table
