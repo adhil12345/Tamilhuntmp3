@@ -34,7 +34,7 @@
             <div class="bnneerMainbox" id="">
                 <div class="banner-for-mp3download">
                     <div class="left-section-for-mp3download">
-                        <h1><span style="color: #eeeeee;">${titleH1}</span></h1>
+                        <h1><span style="color: #eeeeee; text-transform: uppercase;">${titleH1}</span></h1>
                         <p class="cast-crew-for-movies">Starring: ${titleStarring}</p>
                         <p class="cast-crew-for-movies">Music: ${titlemusicd}</p>
                         <p class="cast-crew-for-movies">Director: ${titleDirector}</p>
