@@ -20,7 +20,7 @@
                 <td>${size}</td>
                 <td>
                     <button class="btn btn-download" onclick="openDownload('${downloadLink}')">Download</button>
-                    <button class="btn btn-play" onclick="${isGoogleDrive ? 'openGoogleDriveFile' : 'togglePlayStop'}('${downloadLink}', this)">${isGoogleDrive ? 'Play' : 'Play/Stop'}</button>
+                    <button class="btn btn-play" onclick="${isGoogleDrive ? 'openGoogleDriveFile' : 'togglePlayStop'}('${downloadLink}', this)">${isGoogleDrive ? 'Play' : 'Play'}</button>
                 </td>
             `;
             tableBody.appendChild(row);
