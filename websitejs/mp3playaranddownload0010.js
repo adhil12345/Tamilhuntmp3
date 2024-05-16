@@ -1,4 +1,4 @@
- var currentSong = null;
+var currentSong = null;
 
     // Function to dynamically create table rows
     function populateTable() {
@@ -80,7 +80,7 @@
 
     // Function to extract file ID from Google Drive download link
     function extractGoogleDriveFileId(url) {
-        var match = url.match(/\/d\/([a-zA-Z0-9_-]+)(?:\/|$)/);
+        var match = url.match(/\/d\/([^/]+)\//);
         return match ? match[1] : null;
     }
 
