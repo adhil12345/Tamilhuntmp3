@@ -1,0 +1,24 @@
+        
+        span.current {
+    font-size: smaller;
+}
+.coustom-copywrite-area { float: left; font-size: 13px; display: block; height: 34px; color: #fff; font-weight: 600; line-height: 34px; } @media screen and (max-width: 680px) { .coustom-copywrite-area { width: 100%; height: auto; line-height: inherit; text-align: center; } } 
+
+span.songlist { width: fit-content !important; } 
+div#general { width: -webkit-fill-available !important; } 
+
+
+.banner-for-mp3download { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: linear-gradient(to right, purple, pink, orange); font-family: Arial, sans-serif; color: white; } 
+.left-section-for-mp3download { width: 50%; } 
+.right-section-for-mp3download { width: 50%; text-align: center; } 
+.cast-crew-for-movies { font-size: 14px; } 
+.url-for-website { font-size: 12px; } 
+
+table { width: 100%; border-collapse: collapse; } 
+th, td { padding: 1px; text-align: left; border-bottom: 1px solid #ddd; } 
+th { background-color: #f2f2f2; } 
+.btn { padding: 5px 10px; cursor: pointer; } 
+.btn-download { background-color: #4CAF50; color: white; } 
+.btn-play, .btn-stop { background-color: #2196F3; color: white; } /* Responsive design adjustments */
+
+@media screen and (max-width: 600px) { th, td { padding: 5px; font-size: 12px; }.btn { padding: 3px 6px; font-size: 12px; } }
