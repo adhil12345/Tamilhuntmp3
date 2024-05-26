@@ -59,7 +59,7 @@ var currentSong = null;
             // Start loading the new song
             currentSong = songUrl;
             audioPlayer.src = songUrl;
-            playButton.textContent = 'Loading...';
+            playButton.innerHTML = '<img style="width:10px;" src="https://upload.wikimedia.org/wikipedia/commons/a/ad/YouTube_loading_symbol_3_%28transparent%29.gif"/>';
             audioPlayer.play();
 
             // Add event listener for 'playing' event
